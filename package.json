@@ -11,7 +11,8 @@
     "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
-    "react-scripts": "1.1.4"
+    "react-scripts": "1.1.4",
+    "redux-logger": "^3.0.6"
   },
   "scripts": {
     "start": "react-scripts start",
