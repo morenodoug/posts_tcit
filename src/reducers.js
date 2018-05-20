@@ -2,9 +2,10 @@ import { combineReducers } from "redux";
 import { ADD_POST, DELETE_POST } from "./actions";
 import { UPDATE_FILTER_POST_FORM, UPDATE_ADD_POST_FORM } from "./actions";
 
+
 const UI_INITIAL_STATE = {
     addPostForm: {
-        postName: "dsadas",
+        postName: "",
         postDescription: "",
         isAdding: false,
         isReadyToAdd: false
