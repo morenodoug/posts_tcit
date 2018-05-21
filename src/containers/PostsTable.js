@@ -36,7 +36,6 @@ const styles = theme => ({
 class PostsTable extends Component {
     constructor(props) {
         super(props);
-        console.log(props);
         this.state = {
             page: 0,
             rowsPerPage: 5,
@@ -62,11 +61,10 @@ class PostsTable extends Component {
     render() {
         const begin = this.state.page * this.state.rowsPerPage;
         const end =  this.state.page * this.state.rowsPerPage  + this.state.rowsPerPage ;
-        let postsCopy =  this.props.posts.slice();
-        console.log(`filterBy: ${this.state.filterBy}`)    
+        let postsCopy =  this.props.posts.slice();   
+        
         if(this.state.filterBy.length !==0){
-            console.log("filtrando")
-            postsCopy =  postsCopy.filter((post) => (post.name.indexOf(this.state.filterBy) !== -1 ))
+            postsCopy =  postsCopy.filter((post) => (post.name.toUpperCase().indexOf(this.state.filterBy) !== -1 ))
         }
         const posts  = postsCopy.slice(begin , end);
         const {rowsPerPage, page } = this.state;

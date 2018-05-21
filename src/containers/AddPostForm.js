@@ -37,6 +37,7 @@ class AddPostForm extends Component {
         
     }
     onClickCrearButton(){
+       
         this.props.addPost({
             name: this.props.addPostForm.postName, 
             description: this.props.addPostForm.postDescription

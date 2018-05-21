@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import { ADD_POST, DELETE_POST } from "./actions";
-import { UPDATE_FILTER_POST_FORM, UPDATE_ADD_POST_FORM } from "./actions";
+import { UPDATE_FILTER_POST_FORM, UPDATE_ADD_POST_FORM, CHARGE_POSTS } from "./actions";
 
 
 const UI_INITIAL_STATE = {
@@ -20,10 +20,14 @@ const UI_INITIAL_STATE = {
 
 function posts(state = [], action) {
     switch (action.type) {
+
+        case CHARGE_POSTS:
+            return action.posts;
+
         case ADD_POST:
-            let oldPosts = state.slice();
-            oldPosts.push(action.post);
-            return oldPosts;
+            let postsCopy = state.slice();
+            postsCopy.push(action.post);
+            return postsCopy;
 
         case DELETE_POST:
             return state.map((post) => post.id !== action.post.id);
