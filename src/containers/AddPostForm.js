@@ -90,7 +90,7 @@ function mapStateToProps( state){
 function mapDispatchToProps(dispatch){
     return {
         updateAddPostFormState: (stateAddPostForm) => (dispatch(updateAddPostForm(stateAddPostForm))),
-        addPost: (name, description) =>(dispatch(addPost({name, description})))
+        addPost: (post) => (dispatch(addPost(post ) ))
 
     }
 }
