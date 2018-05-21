@@ -10,6 +10,7 @@ class PostApp extends Component {
   render(){
     return(
       <div>
+        
         <PostsTable/>
         <AddPostForm/>
       </div>

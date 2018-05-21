@@ -15,7 +15,6 @@ class AddPostForm extends Component {
 
     constructor(props) {
         super(props);
-        console.log(this.props);
         this.onChangePostName = this.onChangePostName.bind(this);
         this.onChangePostDescription =  this.onChangePostDescription.bind(this);
         this.onClickCrearButton =  this.onClickCrearButton.bind(this);
@@ -45,7 +44,6 @@ class AddPostForm extends Component {
     }
 
     render(){
-        console.log("render");
         const crearButtonDisabled = ( this.props.addPostForm.isAdding || !this.props.addPostForm.isReadyToAdd );
         return (
         <div>

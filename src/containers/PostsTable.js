@@ -2,12 +2,10 @@ import React from "react";
 import { Component } from "react";
 
 import { connect } from "react-redux";
-import { isValidString } from "../helpers";
-import { updateAddPostForm, addPost } from "../actions";
+import  FilterPostsForm from "../components/FilterPostsForm";
 
 import Grid from "@material-ui/core/Grid";
-import Button from "@material-ui/core/Button";
-import {Table, TableHead, TableBody, TableRow, TableCell, TableFooter, TablePagination, Paper} from "@material-ui/core"
+import {Table, TableHead, TableBody, TableRow, TableCell, TableFooter, TablePagination} from "@material-ui/core"
 import { withStyles } from '@material-ui/core/styles';
 
 const CustomTableCell = withStyles(theme => ({
@@ -20,7 +18,7 @@ const CustomTableCell = withStyles(theme => ({
     },
   }))(TableCell);
   
-  const styles = theme => ({
+const styles = theme => ({
     root: {
       width: '100%',
       marginTop: theme.spacing.unit * 3,
@@ -41,10 +39,12 @@ class PostsTable extends Component {
         console.log(props);
         this.state = {
             page: 0,
-            rowsPerPage: 5
+            rowsPerPage: 5,
+            filterBy:""
         }
         this.handleChangePage = this.handleChangePage.bind(this);
         this.handleChangeRowsPerPage = this.handleChangeRowsPerPage.bind(this);
+        this.setFilterBy =  this.setFilterBy.bind(this);
     }
     handleChangePage(event, page) {
         this.setState({ page });
@@ -54,50 +54,63 @@ class PostsTable extends Component {
         this.setState({ rowsPerPage: event.target.value })
     }
 
+    setFilterBy(filterBy){
+        console.log("holiii")
+        this.setState({filterBy:filterBy.trim()})
+    }
+
     render() {
         const begin = this.state.page * this.state.rowsPerPage;
         const end =  this.state.page * this.state.rowsPerPage  + this.state.rowsPerPage ;
-        const posts  = this.props.posts.slice(begin , end);
+        let postsCopy =  this.props.posts.slice();
+        console.log(`filterBy: ${this.state.filterBy}`)    
+        if(this.state.filterBy.length !==0){
+            console.log("filtrando")
+            postsCopy =  postsCopy.filter((post) => (post.name.indexOf(this.state.filterBy) !== -1 ))
+        }
+        const posts  = postsCopy.slice(begin , end);
         const {rowsPerPage, page } = this.state;
         const {classes}  = this.props;
-        console.log(classes)
         return(
             
-                <Grid container spacing={16}>
-                    <Grid item xs={12} md={12}>
-                        <Table>
-                            <TableHead>
-                                <TableRow>
-                                    <CustomTableCell>Nombre Post</CustomTableCell>
-                                    <CustomTableCell>Descripcion</CustomTableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {posts.map((post, index) =>{
-                                  return(
-                                      <TableRow key ={index} className={classes.row}>
-                                        <CustomTableCell >{post.name}</CustomTableCell>
-                                        <CustomTableCell>{post.description}</CustomTableCell>
-                                      </TableRow>
-                                  )  
-                                })}
-                            </TableBody>
-                            <TableFooter>
-                                <TableRow>
-                                    <TablePagination
-                                        rowsPerPage={rowsPerPage}
-                                        page={page}
-                                        count={this.props.posts.length}
-                                        onChangePage ={this.handleChangePage}
-                                        onChangeRowsPerPage = {this.handleChangeRowsPerPage}                                
-                                    ></TablePagination>
-                                </TableRow>
-
-                            </TableFooter>                            
-                        </Table>                    
-                    </Grid>
-          
+            <Grid container spacing={16}>
+                <Grid item xs={12}>
+                    <FilterPostsForm setFilterBy = {this.setFilterBy}/>
                 </Grid>
+                <Grid item xs={12} md={12}>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <CustomTableCell>Nombre Post</CustomTableCell>
+                                <CustomTableCell>Descripcion</CustomTableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {posts.map((post, index) =>{
+                                return(
+                                    <TableRow key ={index} className={classes.row}>
+                                    <CustomTableCell >{post.name}</CustomTableCell>
+                                    <CustomTableCell>{post.description}</CustomTableCell>
+                                    </TableRow>
+                                )  
+                            })}
+                        </TableBody>
+                        <TableFooter>
+                            <TableRow>
+                                <TablePagination
+                                    rowsPerPage={rowsPerPage}
+                                    page={page}
+                                    count={postsCopy.length}
+                                    onChangePage ={this.handleChangePage}
+                                    onChangeRowsPerPage = {this.handleChangeRowsPerPage}                                
+                                ></TablePagination>
+                            </TableRow>
+
+                        </TableFooter>                            
+                    </Table>                    
+                </Grid>
+        
+            </Grid>
             
         );
     }
