@@ -64,6 +64,7 @@ class PostsTable extends Component {
         let postsCopy =  this.props.posts.slice();   
         
         if(this.state.filterBy.length !==0){
+            console.log(postsCopy)
             postsCopy =  postsCopy.filter((post) => (post.name.toUpperCase().indexOf(this.state.filterBy) !== -1 ))
         }
         const posts  = postsCopy.slice(begin , end);
@@ -107,7 +108,6 @@ class PostsTable extends Component {
                         </TableFooter>                            
                     </Table>                    
                 </Grid>
-        
             </Grid>
             
         );

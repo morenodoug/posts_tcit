@@ -5,7 +5,7 @@ import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import {connect }from "react-redux";
 import {isValidString} from "../helpers";
-import {updateAddPostForm, addPost} from "../actions";
+import {updateAddPostForm, addPostThunk} from "../actions";
 
 const styles = {
     fontFamily: "sans-serif",
@@ -18,6 +18,7 @@ class AddPostForm extends Component {
         this.onChangePostName = this.onChangePostName.bind(this);
         this.onChangePostDescription =  this.onChangePostDescription.bind(this);
         this.onClickCrearButton =  this.onClickCrearButton.bind(this);
+        this.cleanForm = this.cleanForm.bind(this);
     }
     onChangePostName(element){
         const addPostFormState  = {...this.props.addPostForm};
@@ -36,12 +37,18 @@ class AddPostForm extends Component {
         this.props.updateAddPostFormState(addPostFormState);
         
     }
+
+    cleanForm(){
+        const addPostFormState = {...this.props.addPostForm};
+        addPostFormState.postDescription = "";
+        addPostFormState.postName = "";
+        addPostFormState.isReadyToAdd =  false;        
+        this.props.updateAddPostFormState(addPostFormState);
+    }
     onClickCrearButton(){
        
-        this.props.addPost({
-            name: this.props.addPostForm.postName, 
-            description: this.props.addPostForm.postDescription
-        });
+        this.props.addPost( this.props.addPostForm.postName, this.props.addPostForm.postDescription)
+        .then(() => this.cleanForm() );
     }
 
     render(){
@@ -89,7 +96,7 @@ function mapStateToProps( state){
 function mapDispatchToProps(dispatch){
     return {
         updateAddPostFormState: (stateAddPostForm) => (dispatch(updateAddPostForm(stateAddPostForm))),
-        addPost: (post) => (dispatch(addPost(post ) ))
+        addPost: (postName, postDescription) => (dispatch(addPostThunk(postName, postDescription ) ))
 
     }
 }

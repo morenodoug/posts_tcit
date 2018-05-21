@@ -1,15 +1,12 @@
 import { host } from "./config";
+import axios from 'axios';
 
 const resourceUrl = `${host}/post`;
 export const getPosts = () => {
-    return fetch(resourceUrl, {
-        "method": "get",
-        'Content-Type': 'application/json'
-    })
+    return axios(resourceUrl)
 }
 
-export const addPost = () => {
-    return fetch(resourceUrl, {
+export const addPostRequest = (postName, postDescription) => {
+    return axios.post(resourceUrl, { postName, postDescription })
 
-    })
 }

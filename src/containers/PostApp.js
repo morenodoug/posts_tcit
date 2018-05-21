@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import AddPostForm  from "./containers/AddPostForm";
-import  PostsTable from "./containers/PostsTable";
+import AddPostForm  from "./AddPostForm";
+import  PostsTable from "./PostsTable";
 import {connect} from "react-redux";
-import {fetchPosts} from "./actions";
+import {fetchPosts} from "../actions";
 
 
 
@@ -14,7 +14,6 @@ class PostApp extends Component {
   componentDidMount(){
     console.log(this.props);
     this.props.fetchPosts()
-    
   }
   render(){
     return(

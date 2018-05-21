@@ -1,4 +1,4 @@
-import { getPosts } from "./api";
+import { getPosts, addPostRequest } from "./api";
 
 export const CHARGE_POSTS = "CHARGE_POSTS";
 export const ADD_POST = "ADD_POST";
@@ -41,6 +41,20 @@ export function chargePosts(posts) {
 
 export const fetchPosts = () => (dispatch, getState) => {
     return getPosts()
-        .then(response => response.json())
-        .then(posts => dispatch(chargePosts(posts)))
+        .then(response => dispatch(chargePosts(response.data)))
+}
+
+
+export const addPostThunk = (postName, postDescription) => (dispatch, getState) => {
+    return addPostRequest(postName, postDescription)
+        .then((response) => {
+            if (response.status === 201) {
+
+                dispatch(addPost({ id: response.data[0].id, name: response.data[0].name, description: response.data[0].description }))
+            } else {
+                Promise.reject(response.status)
+            }
+
+        })
+
 }
