@@ -8,6 +8,33 @@ import { updateAddPostForm, addPost } from "../actions";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import {Table, TableHead, TableBody, TableRow, TableCell, TableFooter, TablePagination, Paper} from "@material-ui/core"
+import { withStyles } from '@material-ui/core/styles';
+
+const CustomTableCell = withStyles(theme => ({
+    head: {
+      backgroundColor: theme.palette.common.black,
+      color: theme.palette.common.white,
+    },
+    body: {
+      fontSize: 14,
+    },
+  }))(TableCell);
+  
+  const styles = theme => ({
+    root: {
+      width: '100%',
+      marginTop: theme.spacing.unit * 3,
+      overflowX: 'auto',
+    },
+    table: {
+      minWidth: 700,
+    },
+    row: {
+      '&:nth-of-type(odd)': {
+        backgroundColor: theme.palette.background.default,
+      },
+    },
+  });
 class PostsTable extends Component {
     constructor(props) {
         super(props);
@@ -32,6 +59,8 @@ class PostsTable extends Component {
         const end =  this.state.page * this.state.rowsPerPage  + this.state.rowsPerPage ;
         const posts  = this.props.posts.slice(begin , end);
         const {rowsPerPage, page } = this.state;
+        const {classes}  = this.props;
+        console.log(classes)
         return(
             
                 <Grid container spacing={16}>
@@ -39,16 +68,16 @@ class PostsTable extends Component {
                         <Table>
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>Nombre Post</TableCell>
-                                    <TableCell>Descripcion</TableCell>
+                                    <CustomTableCell>Nombre Post</CustomTableCell>
+                                    <CustomTableCell>Descripcion</CustomTableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {posts.map((post, index) =>{
                                   return(
-                                      <TableRow key ={index}>
-                                        <TableCell>{post.name}</TableCell>
-                                        <TableCell>{post.description}</TableCell>
+                                      <TableRow key ={index} className={classes.row}>
+                                        <CustomTableCell >{post.name}</CustomTableCell>
+                                        <CustomTableCell>{post.description}</CustomTableCell>
                                       </TableRow>
                                   )  
                                 })}
@@ -80,4 +109,4 @@ function mapStateToProps(state){
     }
 }
 
-export default connect(mapStateToProps,null)(PostsTable);
+export default connect(mapStateToProps,null)(withStyles(styles)(PostsTable));
