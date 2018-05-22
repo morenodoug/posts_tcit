@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
 import { ADD_POST, DELETE_POST } from "./actions";
-import { UPDATE_FILTER_POST_FORM, UPDATE_ADD_POST_FORM, CHARGE_POSTS } from "./actions";
+import { UPDATE_ADD_POST_FORM, CHARGE_POSTS } from "./actions";
 
 
 const UI_INITIAL_STATE = {
@@ -10,12 +10,7 @@ const UI_INITIAL_STATE = {
         isAdding: false,
         isReadyToAdd: false
     },
-    filterPostForm: {
-        filterNameBy: "",
-        isFiltering: false,
-        isReadyToFilter: false,
 
-    }
 }
 
 function posts(state = [], action) {
@@ -43,8 +38,6 @@ function ui(state = UI_INITIAL_STATE, action) {
         case UPDATE_ADD_POST_FORM:
             return {...state, addPostForm: action.addPostForm }
 
-        case UPDATE_FILTER_POST_FORM:
-            return {...state, filterPostForm: action.filterPostForm };
 
         default:
             return state;

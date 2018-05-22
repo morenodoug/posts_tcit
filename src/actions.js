@@ -4,7 +4,7 @@ export const CHARGE_POSTS = "CHARGE_POSTS";
 export const ADD_POST = "ADD_POST";
 export const DELETE_POST = "DELETE_POST";
 export const UPDATE_ADD_POST_FORM = "UPDATE_ADD_POST_FORM";
-export const UPDATE_FILTER_POST_FORM = "UPDATE_FILTER_POST_FORM";
+
 
 
 
