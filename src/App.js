@@ -9,7 +9,7 @@ const store = configureStore();
 class App extends Component {
   render() {
     return (
-      <div>
+      <div className= {{flexGroup:1}}>
         <Provider store={store}>
           <PostApp/>
 

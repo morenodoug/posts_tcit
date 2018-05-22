@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import {deletePostThunk} from "../actions";
 import  FilterPostsForm from "../components/FilterPostsForm";
 import Grid from "@material-ui/core/Grid";
-import {Table, TableHead, TableBody, TableRow, TableCell, TableFooter, TablePagination, Button} from "@material-ui/core"
+import {Paper, Table, TableHead, TableBody, TableRow, TableCell, TableFooter, TablePagination, Button} from "@material-ui/core"
 import { withStyles } from '@material-ui/core/styles';
 const CustomTableCell = withStyles(theme => ({
     head: {
@@ -79,10 +79,10 @@ class PostsTable extends Component {
         return(
             
             <Grid container spacing={16}>
-                <Grid item xs={12}>
+                <Grid item xs={12} >
                     <FilterPostsForm setFilterBy = {this.setFilterBy}/>
                 </Grid>
-                <Grid item xs={12} md={12}>
+                <Grid item xs={12} md={12} >
                     <Table>
                         <TableHead>
                             <TableRow>

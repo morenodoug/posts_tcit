@@ -56,33 +56,33 @@ class AddPostForm extends Component {
         return (
         <div>
             <Grid container spacing={24} style={styles}>
-            <Grid item xs={12} md={4}>
-                <TextField
-                id="name"
-                label="Nombre del Post"
-                fullWidth
-                value= {this.props.addPostForm.postName}
-                onChange = {this.onChangePostName}                
-                />
-            </Grid>
-            <Grid item xs={12} md={5}>
-                <TextField
+                <Grid item xs={12} md={4}>
+                    <TextField
+                    id="name"
+                    label="Nombre del Post"
                     fullWidth
-                    id="descripcion"
-                    label="Descripcion"
-                    value = {this.props.addPostForm.postDescription}
-                    onChange = {this.onChangePostDescription}
-                />
-            </Grid>
-            <Grid item xs={12} md={3}>
-                <Button 
-                    variant="raised" 
-                    color="primary"
-                    disabled ={crearButtonDisabled}
-                    onClick = {this.onClickCrearButton}>
-                Crear
-                </Button>
-            </Grid>
+                    value= {this.props.addPostForm.postName}
+                    onChange = {this.onChangePostName}                
+                    />
+                </Grid>
+                <Grid item xs={12} md={5}>
+                    <TextField
+                        fullWidth
+                        id="descripcion"
+                        label="Descripcion"
+                        value = {this.props.addPostForm.postDescription}
+                        onChange = {this.onChangePostDescription}
+                    />
+                </Grid>
+                <Grid item xs={12} md={3}>
+                    <Button 
+                        variant="raised" 
+                        color="primary"
+                        disabled ={crearButtonDisabled}
+                        onClick = {this.onClickCrearButton}>
+                    Crear
+                    </Button>
+                </Grid>
             </Grid>
         </div>
         );        
