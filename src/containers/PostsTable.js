@@ -2,12 +2,11 @@ import React from "react";
 import { Component } from "react";
 
 import { connect } from "react-redux";
+import {deletePostThunk} from "../actions";
 import  FilterPostsForm from "../components/FilterPostsForm";
-
 import Grid from "@material-ui/core/Grid";
-import {Table, TableHead, TableBody, TableRow, TableCell, TableFooter, TablePagination} from "@material-ui/core"
+import {Table, TableHead, TableBody, TableRow, TableCell, TableFooter, TablePagination, Button} from "@material-ui/core"
 import { withStyles } from '@material-ui/core/styles';
-
 const CustomTableCell = withStyles(theme => ({
     head: {
       backgroundColor: theme.palette.common.black,
@@ -43,6 +42,7 @@ class PostsTable extends Component {
         }
         this.handleChangePage = this.handleChangePage.bind(this);
         this.handleChangeRowsPerPage = this.handleChangeRowsPerPage.bind(this);
+        this.handleOnClikEliminar =  this.handleOnClikEliminar.bind(this);
         this.setFilterBy =  this.setFilterBy.bind(this);
     }
     handleChangePage(event, page) {
@@ -53,8 +53,13 @@ class PostsTable extends Component {
         this.setState({ rowsPerPage: event.target.value })
     }
 
+    handleOnClikEliminar(postId){
+        // console.log(postId);
+        this.props.deletePost(postId);
+       
+    }
+
     setFilterBy(filterBy){
-        console.log("holiii")
         this.setState({filterBy:filterBy.trim()})
     }
 
@@ -68,6 +73,7 @@ class PostsTable extends Component {
             postsCopy =  postsCopy.filter((post) => (post.name.toUpperCase().indexOf(this.state.filterBy) !== -1 ))
         }
         const posts  = postsCopy.slice(begin , end);
+        console.log(posts)
         const {rowsPerPage, page } = this.state;
         const {classes}  = this.props;
         return(
@@ -82,14 +88,23 @@ class PostsTable extends Component {
                             <TableRow>
                                 <CustomTableCell>Nombre Post</CustomTableCell>
                                 <CustomTableCell>Descripcion</CustomTableCell>
+                                <CustomTableCell>Eliminar</CustomTableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {posts.map((post, index) =>{
                                 return(
-                                    <TableRow key ={index} className={classes.row}>
+                                    <TableRow key ={post.id} className={classes.row}>
                                     <CustomTableCell >{post.name}</CustomTableCell>
                                     <CustomTableCell>{post.description}</CustomTableCell>
+                                    <CustomTableCell>
+                                        <Button
+                                            id={post.name}
+                                            onClick={() => (this.handleOnClikEliminar(post.id))}
+                                        >
+                                            Eliminar
+                                        </Button>
+                                    </CustomTableCell>
                                     </TableRow>
                                 )  
                             })}
@@ -119,5 +134,10 @@ function mapStateToProps(state){
         posts: state.posts
     }
 }
+function mapDispatchToProps(dispatch){
+    return {
+        deletePost: (postId)=> (dispatch (deletePostThunk(postId)))
+    }
+}
 
-export default connect(mapStateToProps,null)(withStyles(styles)(PostsTable));
+export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(PostsTable));

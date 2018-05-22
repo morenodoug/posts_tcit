@@ -30,7 +30,7 @@ function posts(state = [], action) {
             return postsCopy;
 
         case DELETE_POST:
-            return state.map((post) => post.id !== action.post.id);
+            return state.filter((post) => action.postId !== post.id);
 
         default:
             return state;

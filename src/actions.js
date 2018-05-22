@@ -1,4 +1,4 @@
-import { getPosts, addPostRequest } from "./api";
+import { getPosts, addPostRequest, deletePostRequest } from "./api";
 
 export const CHARGE_POSTS = "CHARGE_POSTS";
 export const ADD_POST = "ADD_POST";
@@ -46,15 +46,23 @@ export const fetchPosts = () => (dispatch, getState) => {
 
 
 export const addPostThunk = (postName, postDescription) => (dispatch, getState) => {
-    return addPostRequest(postName, postDescription)
-        .then((response) => {
-            if (response.status === 201) {
+    return addPostRequest(postName, postDescription).then((response) => {
+        if (response.status === 201) {
 
-                dispatch(addPost({ id: response.data[0].id, name: response.data[0].name, description: response.data[0].description }))
-            } else {
-                Promise.reject(response.status)
-            }
+            dispatch(addPost({ id: response.data.id, name: response.data.name, description: response.data.description }))
+        } else {
+            Promise.reject(response.status)
+        }
+    });
+}
 
-        })
+export const deletePostThunk = (postId) => (dispatch, getState) => {
+    return deletePostRequest(postId).then((response) => {
+        if (response.status === 200) {
+            console.log(response);
+            dispatch(deletePost(response.data.id));
+        }
+    })
+
 
 }
